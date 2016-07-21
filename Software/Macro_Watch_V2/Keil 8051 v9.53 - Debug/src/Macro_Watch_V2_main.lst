@@ -1,0 +1,400 @@
+C51 COMPILER V9.53.0.0   MACRO_WATCH_V2_MAIN                                               07/21/2016 11:46:54 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE MACRO_WATCH_V2_MAIN
+OBJECT MODULE PLACED IN .\src\Macro_Watch_V2_main.OBJ
+COMPILER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v3\developer\toolchains\keil_8051\9.53\BIN\C51.exe C:\Users\Parker\
+                    -Documents\GitHub\Macro_Watch_V2\Software\Macro_Watch_V2\src\Macro_Watch_V2_main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARG
+                    -E) WARNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) INTVECTOR(0X0000) INTPROMOTE INCDIR(C:/Users/Parker/Documents/GitHub/
+                    -Macro_Watch_V2/Software/Macro_Watch_V2/inc;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3//Device/shared/si
+                    -8051Base;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3//Device/EFM8SB1;C:/SiliconLabs/SimplicityStudio/v3/
+                    -developer/sdks/si8051/v3//Device/EFM8SB1/inc) PRINT(.\src\Macro_Watch_V2_main.lst) COND PAGEWIDTH(120) PAGELENGTH(65) OB
+                    -JECT(.\src\Macro_Watch_V2_main.OBJ)
+
+line level    source
+
+   1          #include <si_toolchain.h>
+   2          #include <SI_EFM8SB1_Register_Enums.h>
+   3          #include "InitDevice.h"
+   4          
+   5          SI_SBIT(M32, SFR_P0, 0);
+   6          SI_SBIT(M16, SFR_P0, 1);
+   7          SI_SBIT(M8, SFR_P0, 2);
+   8          SI_SBIT(M4, SFR_P0, 3);
+   9          SI_SBIT(M2, SFR_P0, 4);
+  10          SI_SBIT(M1, SFR_P0, 5);
+  11          
+  12          SI_SBIT(EXTRA, SFR_P0, 7);
+  13          
+  14          SI_SBIT(SEC, SFR_P1, 0);
+  15          SI_SBIT(H1, SFR_P1, 1);
+  16          SI_SBIT(H2, SFR_P1, 2);
+  17          SI_SBIT(H4, SFR_P1, 3);
+  18          SI_SBIT(H8, SFR_P1, 5);
+  19          
+  20          SI_SBIT(SW, SFR_P0, 6);
+  21          
+  22          #define SUSPEND                             0x40        // Value to write to PMU0CF to place
+  23                                                          // the device in Suspend mode
+  24          
+  25          #define SLEEP                               0x80        // Value to write to PMU0CF to place
+  26                                                          // the device in Sleep Mode
+  27          
+  28          #define POWER_MODE                          SLEEP       // Select between Suspend and Sleep
+  29                                                          // mode. When debugging, if the
+  30                                                          // MCU is stopped/halted while
+  31                                                          // in Sleep Mode, the connection
+  32                                                          // to the IDE will be lost. The
+  33                                                          // IDE connection will not be lost
+  34                                                          // if the MCU is stopped/halted
+  35                                                          // while in suspend mode.
+  36          
+  37          SI_SEGMENT_VARIABLE(wakeup_source, uint8_t, SI_SEG_XDATA);
+  38          
+  39          int STATE = 0;
+  40          
+  41          int BUTT_action = 0;
+  42          
+  43          int Disp_timeout = 0;
+  44          int Change_time = 0;
+  45          int ADVCLKDELAY = 0;
+  46          int ADVCLKCNT = 0;
+  47          
+  48          int SECONDS = 0;
+  49          int MINUTES = 12;
+  50          int HOUR = 12;
+C51 COMPILER V9.53.0.0   MACRO_WATCH_V2_MAIN                                               07/21/2016 11:46:54 PAGE 2   
+
+  51          
+  52          void delay_ms(int);
+  53          void TEST_LED_PATTERN(void);
+  54          
+  55          
+  56          int main(void)
+  57          {
+  58   1              enter_DefaultMode_from_RESET();
+  59   1      
+  60   1          TEST_LED_PATTERN();
+  61   1      
+  62   1              M32 = 0;
+  63   1              M16 = 0;
+  64   1              M8 = 0;
+  65   1              M4 = 0;
+  66   1              M2 = 0;
+  67   1              M1 = 0;
+  68   1              SEC = 0;
+  69   1              H1 = 0;
+  70   1              H2 = 0;
+  71   1              H4 = 0;
+  72   1              H8 = 0;
+  73   1              EXTRA = 0;
+  74   1      
+  75   1          // Set P0.6 to Digital Input for port match detection.
+  76   1          P0MASK |= P0MASK_B6__COMPARED;
+  77   1          P0MDIN |= P0MDIN_B6__DIGITAL;
+  78   1      
+  79   1              while (1)
+  80   1              {
+  81   2                      PMU0CF = 0x20;
+  82   2                      RSTSRC = 0x04;                // Disable VDDMON, leave missing clock
+  83   2                                                                                // detector enabled
+  84   2                      // Put device to sleep
+  85   2                      PMU0CF = 0x0E | POWER_MODE;   // To change between SUSPEND or SLEEP
+  86   2                                                                                // modes, change the POWER_MODE
+  87   2                                                                                // definition in the global constants
+  88   2      
+  89   2                      while (!(VDM0CN & 0x20));     // Wait for VDDOK to be set to 1
+  90   2      
+  91   2              // Read the wake-up source flags
+  92   2              wakeup_source = PMU0CF & 0x1F;
+  93   2      
+  94   2              // Clear the wake-up source flags
+  95   2              PMU0CF = 0x20;
+  96   2      
+  97   2              // Check for smaRTClock alarm
+  98   2              if (wakeup_source & 0x04)
+  99   2              {
+ 100   3                      SECONDS++;
+ 101   3                      if(SECONDS == 60)
+ 102   3                      {
+ 103   4                              SECONDS = 0;
+ 104   4                              MINUTES++;
+ 105   4                              if(MINUTES == 60)
+ 106   4                              {
+ 107   5                                      MINUTES = 0;
+ 108   5                                      HOUR++;
+ 109   5                                      if(HOUR == 13)
+ 110   5                                      {
+ 111   6                                              HOUR = 1;
+ 112   6                                      }
+ 113   5                              }
+C51 COMPILER V9.53.0.0   MACRO_WATCH_V2_MAIN                                               07/21/2016 11:46:54 PAGE 3   
+
+ 114   4                      }
+ 115   3              }
+ 116   2      
+ 117   2              switch(STATE)
+ 118   2              {
+ 119   3              case 0 : //OFF STATE
+ 120   3      
+ 121   3                      M32 = 0;
+ 122   3                      M16 = 0;
+ 123   3                      M8 = 0;
+ 124   3                      M4 = 0;
+ 125   3                      M2 = 0;
+ 126   3                      M1 = 0;
+ 127   3                      SEC = 0;
+ 128   3                      H1 = 0;
+ 129   3                      H2 = 0;
+ 130   3                      H4 = 0;
+ 131   3                      H8 = 0;
+ 132   3                      EXTRA = 0;
+ 133   3      
+ 134   3                      // Check for Port Match event
+ 135   3                      if (wakeup_source & 0x02)
+ 136   3                      {
+ 137   4                              STATE = 1;
+ 138   4                              BUTT_action = 1;
+ 139   4      
+ 140   4                              H1 = HOUR & 0x01;
+ 141   4                                      H2 = (HOUR >> 1) & 0x01;
+ 142   4                                      H4 = (HOUR >> 2) & 0x01;
+ 143   4                                      H8 = (HOUR >> 3) & 0x01;
+ 144   4      
+ 145   4                                      M1  = MINUTES & 0x01;
+ 146   4                                      M2  = (MINUTES >> 1) & 0x01;
+ 147   4                                      M4  = (MINUTES >> 2) & 0x01;
+ 148   4                                      M8  = (MINUTES >> 3) & 0x01;
+ 149   4                                      M16  = (MINUTES >> 4) & 0x01;
+ 150   4                                      M32  = (MINUTES >> 5) & 0x01;
+ 151   4      
+ 152   4                                      SEC = !SEC;
+ 153   4                      }
+ 154   3                      else
+ 155   3                      {
+ 156   4                              STATE = 0;
+ 157   4                              BUTT_action = 0;
+ 158   4                      }
+ 159   3                      break;
+ 160   3              case 1 : //BUTTON PRESSED. RECORD TIME.
+ 161   3      
+ 162   3                      H1 = HOUR & 0x01;
+ 163   3                              H2 = (HOUR >> 1) & 0x01;
+ 164   3                              H4 = (HOUR >> 2) & 0x01;
+ 165   3                              H8 = (HOUR >> 3) & 0x01;
+ 166   3      
+ 167   3                              M1  = MINUTES & 0x01;
+ 168   3                              M2  = (MINUTES >> 1) & 0x01;
+ 169   3                              M4  = (MINUTES >> 2) & 0x01;
+ 170   3                              M8  = (MINUTES >> 3) & 0x01;
+ 171   3                              M16  = (MINUTES >> 4) & 0x01;
+ 172   3                              M32  = (MINUTES >> 5) & 0x01;
+ 173   3      
+ 174   3                              SEC = !SEC;
+ 175   3      
+ 176   3                      Disp_timeout = SECONDS + 10;
+C51 COMPILER V9.53.0.0   MACRO_WATCH_V2_MAIN                                               07/21/2016 11:46:54 PAGE 4   
+
+ 177   3      
+ 178   3                      if(Disp_timeout >= 60)
+ 179   3                              {
+ 180   4                                      Disp_timeout = Disp_timeout - 60;
+ 181   4                              }
+ 182   3      
+ 183   3                              Change_time = SECONDS;
+ 184   3                              Change_time = Change_time + 3;
+ 185   3      
+ 186   3                              if(Change_time >= 60)
+ 187   3                              {
+ 188   4                                      Change_time = Change_time - 60;
+ 189   4                              }
+ 190   3      
+ 191   3                              STATE = 2;
+ 192   3      
+ 193   3                              break;
+ 194   3              case 2 : //TURN ON DISPLAY. AND WAIT FOR TIMEOUTS
+ 195   3      
+ 196   3                      H1 = HOUR & 0x01;
+ 197   3                              H2 = (HOUR >> 1) & 0x01;
+ 198   3                              H4 = (HOUR >> 2) & 0x01;
+ 199   3                              H8 = (HOUR >> 3) & 0x01;
+ 200   3      
+ 201   3                              M1  = MINUTES & 0x01;
+ 202   3                              M2  = (MINUTES >> 1) & 0x01;
+ 203   3                              M4  = (MINUTES >> 2) & 0x01;
+ 204   3                              M8  = (MINUTES >> 3) & 0x01;
+ 205   3                              M16  = (MINUTES >> 4) & 0x01;
+ 206   3                              M32  = (MINUTES >> 5) & 0x01;
+ 207   3      
+ 208   3                              SEC = !SEC;
+ 209   3      
+ 210   3                              //Display time out. Time to turn off display.
+ 211   3                              if(Disp_timeout == SECONDS)
+ 212   3                              {
+ 213   4                                      STATE = 0;
+ 214   4                                      BUTT_action = BUTT_action;
+ 215   4                              }
+ 216   3      
+ 217   3                              //Button is pressed again. Reset display time and set button action flag.
+ 218   3                              else if(SW == 0 && BUTT_action == 0)
+ 219   3                              {
+ 220   4                                      STATE = 1;
+ 221   4                                      BUTT_action = 1;
+ 222   4                              }
+ 223   3      
+ 224   3                              //Button is held for 3 seconds. Time to hack time!
+ 225   3                              else if(Change_time == SECONDS && SW == 0 && BUTT_action == 1)
+ 226   3                              {
+ 227   4                                      STATE = 3;
+ 228   4                                      BUTT_action = BUTT_action;
+ 229   4                                      ADVCLKDELAY = 50;
+ 230   4                                      ADVCLKCNT   = 2;
+ 231   4                              }
+ 232   3                              //Button has stopped being pressed. Clear button action flag.
+ 233   3                              else if(SW == 1 && BUTT_action == 1)
+ 234   3                              {
+ 235   4                                      STATE = 2;
+ 236   4                                      BUTT_action = 0;
+ 237   4                              }
+ 238   3      
+ 239   3                              break;
+C51 COMPILER V9.53.0.0   MACRO_WATCH_V2_MAIN                                               07/21/2016 11:46:54 PAGE 5   
+
+ 240   3      
+ 241   3              case 3 : //INCREASE TIME AND DISPLAY TIME.
+ 242   3                      //Switch held. Increase time.
+ 243   3                              while(SW == 0)
+ 244   3                              {
+ 245   4                                      SECONDS = 0;
+ 246   4                                      MINUTES = MINUTES + 1;
+ 247   4                                      if(MINUTES == 60)
+ 248   4                                      {
+ 249   5                                              MINUTES = 0;
+ 250   5                                              HOUR = HOUR + 1;
+ 251   5                                              if(HOUR == 13)
+ 252   5                                              {
+ 253   6                                                      HOUR = 1;
+ 254   6                                              }
+ 255   5                                      }
+ 256   4                                      //Calculate "acceleration" of time hacking.
+ 257   4                                      ADVCLKCNT = ADVCLKCNT - 1;
+ 258   4                                      if(ADVCLKCNT == 0 && ADVCLKDELAY > 5)
+ 259   4                                      {
+ 260   5                                              ADVCLKCNT = 3;
+ 261   5                                              ADVCLKDELAY = ADVCLKDELAY - 5;
+ 262   5                                      }
+ 263   4      
+ 264   4                                      H1 = HOUR & 0x01;
+ 265   4                                      H2 = (HOUR >> 1) & 0x01;
+ 266   4                                      H4 = (HOUR >> 2) & 0x01;
+ 267   4                                      H8 = (HOUR >> 3) & 0x01;
+ 268   4      
+ 269   4                                      M1  = MINUTES & 0x01;
+ 270   4                                      M2  = (MINUTES >> 1) & 0x01;
+ 271   4                                      M4  = (MINUTES >> 2) & 0x01;
+ 272   4                                      M8  = (MINUTES >> 3) & 0x01;
+ 273   4                                      M16  = (MINUTES >> 4) & 0x01;
+ 274   4                                      M32  = (MINUTES >> 5) & 0x01;
+ 275   4      
+ 276   4                                      SEC = 0;
+ 277   4      
+ 278   4                                      delay_ms(ADVCLKDELAY);
+ 279   4      
+ 280   4      
+ 281   4                              }
+ 282   3                              //Switch released. Recalculate on time.
+ 283   3                              if(SW == 1)
+ 284   3                              {
+ 285   4                                      STATE = 1;
+ 286   4                              }
+ 287   3      
+ 288   3                              break;
+ 289   3      
+ 290   3      
+ 291   3                      //Never supposed to get here but just encase of cosmic radiation flipping a bit.
+ 292   3                      default:
+ 293   3      
+ 294   3                              STATE = 0;
+ 295   3      
+ 296   3                              break;
+ 297   3              }
+ 298   2              }
+ 299   1      }
+ 300          
+ 301          void delay_ms(int milliseconds)
+ 302          {
+C51 COMPILER V9.53.0.0   MACRO_WATCH_V2_MAIN                                               07/21/2016 11:46:54 PAGE 6   
+
+ 303   1              milliseconds = milliseconds * 32;
+ 304   1              while((milliseconds) > 0)
+ 305   1              {
+ 306   2                      milliseconds--;
+ 307   2              }
+ 308   1      }
+ 309          
+ 310          void TEST_LED_PATTERN(void)
+ 311          {
+ 312   1              M32 = 1;
+ 313   1              delay_ms(20);
+ 314   1              M32 = 0;
+ 315   1      
+ 316   1              M16 = 1;
+ 317   1              delay_ms(20);
+ 318   1              M16 = 0;
+ 319   1      
+ 320   1              M8 = 1;
+ 321   1              delay_ms(20);
+ 322   1              M8 = 0;
+ 323   1      
+ 324   1              M4 = 1;
+ 325   1              delay_ms(20);
+ 326   1              M4 = 0;
+ 327   1      
+ 328   1              M2 = 1;
+ 329   1              delay_ms(20);
+ 330   1              M2 = 0;
+ 331   1      
+ 332   1              M1 = 1;
+ 333   1              delay_ms(20);
+ 334   1              M1 = 0;
+ 335   1      
+ 336   1              SEC = 1;
+ 337   1              delay_ms(20);
+ 338   1              SEC = 0;
+ 339   1      
+ 340   1              H1 = 1;
+ 341   1              delay_ms(20);
+ 342   1              H1 = 0;
+ 343   1      
+ 344   1              H2 = 1;
+ 345   1              delay_ms(20);
+ 346   1              H2 = 0;
+ 347   1      
+ 348   1              H4 = 1;
+ 349   1              delay_ms(20);
+ 350   1              H4 = 0;
+ 351   1      
+ 352   1              H8 = 1;
+ 353   1              delay_ms(20);
+ 354   1              H8 = 0;
+ 355   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1198    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      1    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     18    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.53.0.0   MACRO_WATCH_V2_MAIN                                               07/21/2016 11:46:54 PAGE 7   
+
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

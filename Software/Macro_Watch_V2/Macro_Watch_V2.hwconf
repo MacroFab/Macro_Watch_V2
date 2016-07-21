@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ASCII"?>
+<device:XMLDevice xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:device="http://www.silabs.com/sls/hc/document/device.ecore" name="EFM8SB10F2G-A-QFN20" partId="com.silabs.mcu.si8051.efm8sb1_g.efm8sb10f2g">
+  <mode name="DefaultMode">
+    <property object="CLOCK_0" propertyId="ABPeripheral.included" value="true"/>
+    <property object="CLOCK_0" propertyId="clock.clockselect.selectclocksource" value="RTC"/>
+    <property object="DefaultMode" propertyId="mode.diagramLocation" value="100, 100"/>
+    <property object="P0.0" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P0.0" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P0.0" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P0.1" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P0.1" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P0.1" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P0.2" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P0.2" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P0.2" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P0.3" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P0.3" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P0.3" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P0.4" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P0.4" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P0.4" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P0.5" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P0.5" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P0.5" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P0.7" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P0.7" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P0.7" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P1.0" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P1.0" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P1.0" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P1.1" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P1.1" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P1.1" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P1.2" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P1.2" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P1.2" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P1.3" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P1.3" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P1.3" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P1.5" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P1.5" propertyId="ports.settings.latch" value="Low"/>
+    <property object="P1.5" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P1.6" propertyId="ports.settings.inputmode" value="Analog"/>
+    <property object="P1.6" propertyId="ports.settings.iomode" value="Analog I/O"/>
+    <property object="P1.6" propertyId="ports.settings.skip" value="Skipped"/>
+    <property object="P1.7" propertyId="ports.settings.inputmode" value="Analog"/>
+    <property object="P1.7" propertyId="ports.settings.iomode" value="Analog I/O"/>
+    <property object="P1.7" propertyId="ports.settings.skip" value="Skipped"/>
+    <property object="PBCFG_0" propertyId="pbcfg.settings.enablecrossbar" value="Enabled"/>
+    <property object="PCACH_0" propertyId="ABPeripheral.included" value="true"/>
+    <property object="PCACH_1" propertyId="ABPeripheral.included" value="true"/>
+    <property object="PCACH_2" propertyId="ABPeripheral.included" value="true"/>
+    <property object="PCACH_2" propertyId="pcach.pcachannel.matchfunction" value="Enabled"/>
+    <property object="PCA_0" propertyId="ABPeripheral.included" value="true"/>
+    <property object="PCA_0" propertyId="pca.pcacountertimerconfiguration.pcaclockfrequency" value="2.731 kHz"/>
+    <property object="PCA_0" propertyId="pca.pcacountertimerconfiguration.pcaclockfrequencyintegervalue" value="2730.66666667"/>
+    <property object="PCA_0" propertyId="pca.pcacountertimerconfiguration.pcaclockperiod" value="366.211 us"/>
+    <property object="PCA_0" propertyId="pca.pcastartrun.pcacountertimerrunstatus" value="Stopped"/>
+    <property object="PCA_0" propertyId="pca.watchdogcontrol.enablewatchdogtimer" value="Disabled"/>
+    <property object="RTC_0" propertyId="ABPeripheral.included" value="true"/>
+    <property object="RTC_0" propertyId="rtc.hidden.oscillatorprecisionwarning" value="No Warning"/>
+    <property object="RTC_0" propertyId="rtc.hidden.rtcalarmprogrammedvalue1" value="128"/>
+    <property object="RTC_0" propertyId="rtc.hidden.rtcloadcapacitanceprogrammedvalue" value="14"/>
+    <property object="RTC_0" propertyId="rtc.rtcalarm.actualalarmperiod" value="1.00 seconds"/>
+    <property object="RTC_0" propertyId="rtc.rtcalarm.alarmprogrammedvalue" value="32768"/>
+    <property object="RTC_0" propertyId="rtc.rtcalarm.enablealarmautoreset" value="Enabled"/>
+    <property object="RTC_0" propertyId="rtc.rtcalarm.enablertcalarm" value="Enabled"/>
+    <property object="RTC_0" propertyId="rtc.rtcalarm.rtcoscillatorfrequency" value="32768"/>
+    <property object="RTC_0" propertyId="rtc.rtcalarm.targetalarmperiod" value="1.00"/>
+    <property object="RTC_0" propertyId="rtc.rtcalarm.targetalarmperiodunits" value="seconds"/>
+    <property object="RTC_0" propertyId="rtc.rtcconfiguration.enablemissingrtcdetector" value="Enabled"/>
+    <property object="RTC_0" propertyId="rtc.rtcconfiguration.enablertcoscillatorbiasdouble" value="Enabled"/>
+    <property object="RTC_0" propertyId="rtc.rtcconfiguration.loadcapacitanceprogrammedvalue" value="12.5 pF"/>
+    <property object="RTC_0" propertyId="rtc.rtcconfiguration.rtcoscillatormode" value="Crystal mode"/>
+    <property object="RTC_0" propertyId="rtc.rtcconfiguration.rtcoscillatorselection" value="External Crystal"/>
+    <property object="RTC_0" propertyId="rtc.rtccontrol.enablertcoscillator" value="Enabled"/>
+    <property object="RTC_0" propertyId="rtc.rtccontrol.rtctimerruncontrol" value="Start"/>
+    <property object="RTC_0" propertyId="rtc.view.view" value="Advanced"/>
+  </mode>
+  <modeTransition>
+    <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.target" value="DefaultMode"/>
+    <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.source" value="RESET"/>
+  </modeTransition>
+</device:XMLDevice>

@@ -1,6 +1,6 @@
 ###Macro_Watch Hardware
 ***
-**Low cost, binary watch based off the PIC16F527 MCU for promotional purposes at MacroFab, INC.**
+**Low cost, binary watch based off the Silicon Labs EFM8SB10F2G-A-QFN20R MCU for promotional purposes at MacroFab, INC.**
 
 ***
 ![Layout Image](Layout.png)

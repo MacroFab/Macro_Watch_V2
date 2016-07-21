@@ -1,5 +1,5 @@
 ###Macro_Watch Hardware
 ***
-**Low cost, binary watch based off the PIC16F527 MCU for promotional purposes at MacroFab, INC.**
+**Low cost, binary watch based off the Silicon Labs EFM8SB10F2G-A-QFN20R MCU for promotional purposes at MacroFab, INC.**
 
-Files are for MPLAB X IDE V3.10. Programming the MacroWatch just requires a PICkit 3 programmer. See main directory for licensing. 
+Files are for Simplicity Studio. Programming the MacroWatch requires a Silicon Labs USB Debug Adapter and a Tag Connect TC2030. See main directory for licensing. 
