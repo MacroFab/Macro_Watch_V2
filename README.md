@@ -15,18 +15,22 @@ This project is under the [Creative Commons Attribution-ShareAlike 4.0 Internati
 
 ***
 **Board Layout**
+
 ![Macro_Watch_V2_Layout](Hardware/Eagle/Layout.png)
 
 ***
 **Board Schematic**
+
 ![Macro_Watch_V2_Layout](Hardware/Eagle/Schematic.png)
 
 ***
 **Completed Macro_Watch V2**
+
 ![Completed_Macro_Watch_V2](Macro_Watch_REV2_PCBA.jpg)
 
 ***
 **Macro_Watch V2 being programmed**
+
 ![Macro_Watch_V2_programming](Macro_Watch_REV2_Programming.jpg)
 
 ***
