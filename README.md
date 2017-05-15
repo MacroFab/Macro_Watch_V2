@@ -1,6 +1,6 @@
 ![MF_ED_Logo](MacroFab_ED_600px.png)
 ***
-###Macro_Watch_V2
+### Macro_Watch_V2
 ***
 **Low cost, binary watch based off the Silicon Labs EFM8SB10F2G-A-QFN20R MCU for promotional purposes at MacroFab, INC.**
 
