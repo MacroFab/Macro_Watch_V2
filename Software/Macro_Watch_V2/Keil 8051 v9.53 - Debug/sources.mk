@@ -2,15 +2,14 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-SRC_UPPER_SRCS := 
 A51_UPPER_SRCS := 
+OBJ_UPPER_SRCS := 
+SRC_UPPER_SRCS := 
+ASM_SRCS := 
 C_SRCS := 
 S_UPPER_SRCS := 
-OBJ_UPPER_SRCS := 
-INC_UPPER_SRCS := 
-ASM_SRCS := 
-OBJS := 
 EXECUTABLES := 
+OBJS := 
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \

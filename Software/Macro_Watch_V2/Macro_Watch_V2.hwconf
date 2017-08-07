@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<device:XMLDevice xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:device="http://www.silabs.com/sls/hc/document/device.ecore" name="EFM8SB10F2G-A-QFN20" partId="com.silabs.mcu.si8051.efm8sb1_g.efm8sb10f2g">
+<device:XMLDevice xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:device="http://www.silabs.com/ss/hwconfig/document/device.ecore" name="EFM8SB10F2G-A-QFN20" partId="mcu.8051.efm8.sb1.efm8sb10f2g-a-qfn20" version="4.0.1">
   <mode name="DefaultMode">
     <property object="CLOCK_0" propertyId="ABPeripheral.included" value="true"/>
     <property object="CLOCK_0" propertyId="clock.clockselect.selectclocksource" value="RTC"/>
@@ -10,6 +10,7 @@
     <property object="P0.1" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
     <property object="P0.1" propertyId="ports.settings.latch" value="Low"/>
     <property object="P0.1" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="P0.2" propertyId="ports.settings.drivestrength" value="High drive"/>
     <property object="P0.2" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
     <property object="P0.2" propertyId="ports.settings.latch" value="Low"/>
     <property object="P0.2" propertyId="ports.settings.outputmode" value="Push-pull"/>
@@ -68,8 +69,8 @@
     <property object="RTC_0" propertyId="rtc.rtcalarm.rtcoscillatorfrequency" value="32768"/>
     <property object="RTC_0" propertyId="rtc.rtcalarm.targetalarmperiod" value="1.00"/>
     <property object="RTC_0" propertyId="rtc.rtcalarm.targetalarmperiodunits" value="seconds"/>
-    <property object="RTC_0" propertyId="rtc.rtcconfiguration.enablemissingrtcdetector" value="Enabled"/>
-    <property object="RTC_0" propertyId="rtc.rtcconfiguration.enablertcoscillatorbiasdouble" value="Enabled"/>
+    <property object="RTC_0" propertyId="rtc.rtcconfiguration.enableautomaticloadcapacitancestepping" value="Enabled"/>
+    <property object="RTC_0" propertyId="rtc.rtcconfiguration.enablertcoscillatorautomaticgaincontrol" value="Enabled"/>
     <property object="RTC_0" propertyId="rtc.rtcconfiguration.loadcapacitanceprogrammedvalue" value="12.5 pF"/>
     <property object="RTC_0" propertyId="rtc.rtcconfiguration.rtcoscillatormode" value="Crystal mode"/>
     <property object="RTC_0" propertyId="rtc.rtcconfiguration.rtcoscillatorselection" value="External Crystal"/>
@@ -78,7 +79,7 @@
     <property object="RTC_0" propertyId="rtc.view.view" value="Advanced"/>
   </mode>
   <modeTransition>
-    <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.target" value="DefaultMode"/>
     <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.source" value="RESET"/>
+    <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.target" value="DefaultMode"/>
   </modeTransition>
 </device:XMLDevice>

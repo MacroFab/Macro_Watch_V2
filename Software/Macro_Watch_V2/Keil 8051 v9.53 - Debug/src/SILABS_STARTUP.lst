@@ -1,15 +1,14 @@
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        07/20/16 11:36:31 PAGE     1
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        05/09/17 16:06:07 PAGE     1
 
 
 MACRO ASSEMBLER AX51 V3.12.0.0
 OBJECT MODULE PLACED IN .\src\SILABS_STARTUP.OBJ
-ASSEMBLER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v3\developer\toolchains\keil_8051\9.53\BIN\AX51.exe C:\Users\Parke
-                      r\Documents\GitHub\Macro_Watch_V2\Software\Macro_Watch_V2\src\SILABS_STARTUP.A51 ERRORPRINT SET(SM
-                      ALL) DEBUG MACRO NOMOD51 INCDIR(C:/Users/Parker/Documents/GitHub/Macro_Watch_V2/Software/Macro_Wat
-                      ch_V2/inc;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3//Device/shared/si8051Base;C:
-                      /SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3//Device/EFM8SB1;C:/SiliconLabs/Simplicit
-                      yStudio/v3/developer/sdks/si8051/v3//Device/EFM8SB1/inc) PRINT(.\src\SILABS_STARTUP.lst) COND SYMB
-                      OLS PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\src\SILABS_STARTUP.OBJ) 
+ASSEMBLER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v4\developer\toolchains\keil_8051\9.53\BIN\AX51.exe C:\Users\Parke
+                      r\SimplicityStudio\v4_workspace\MacroWatch_V2.1\src\SILABS_STARTUP.A51 ERRORPRINT SET(SMALL) DEBUG
+                       MACRO NOMOD51 INCDIR(C:\Users\Parker\SimplicityStudio\v4_workspace\MacroWatch_V2.1\inc;C:/Silicon
+                      Labs/SimplicityStudio/v4/developer/sdks/8051/v4.0.4//Device/shared/si8051base;C:/SiliconLabs/Simpl
+                      icityStudio/v4/developer/sdks/8051/v4.0.4//Device/EFM8SB1/inc) PRINT(.\src\SILABS_STARTUP.lst) CON
+                      D SYMBOLS PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\src\SILABS_STARTUP.OBJ) 
 
 LOC    OBJ             LINE     SOURCE
 
@@ -62,9 +61,9 @@ LOC    OBJ             LINE     SOURCE
                          47     ;
                          48     ;</h>
                          49     ;------------------------------------------------------------------------------
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        07/20/16 11:36:31 PAGE     2
-
                          50     ;
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        05/09/17 16:06:07 PAGE     2
+
                          51     ;<h> Reentrant Stack Initialization
                          52     ;
                          53     ;  The following EQU statements define the stack pointer for reentrant
@@ -127,9 +126,9 @@ LOC    OBJ             LINE     SOURCE
  0082                   110     DPL     DATA    82H
  0083                   111     DPH     DATA    83H
                         112     
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        07/20/16 11:36:31 PAGE     3
-
                         113                     NAME    ?C_STARTUP
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        05/09/17 16:06:07 PAGE     3
+
                         114     
                         115     
 ------                  116     ?C_C51STARTUP   SEGMENT   CODE
@@ -192,9 +191,9 @@ LOC    OBJ             LINE     SOURCE
                                 EXTRN DATA (?C_IBP)
                                 
                                                 MOV     ?C_IBP,#LOW IBPSTACKTOP
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        07/20/16 11:36:31 PAGE     4
-
                                 ENDIF
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        05/09/17 16:06:07 PAGE     4
+
                         177     
                         178     IF XBPSTACK <> 0
                                 EXTRN DATA (?C_XBP)
@@ -223,7 +222,7 @@ LOC    OBJ             LINE     SOURCE
 000009 020000     E     201                     LJMP    ?C_START
                         202     
                         203                     END
-AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        07/20/16 11:36:31 PAGE     5
+AX51 MACRO ASSEMBLER  SILABS_STARTUP                                                        05/09/17 16:06:07 PAGE     5
 
 SYMBOL TABLE LISTING
 ------ ----- -------

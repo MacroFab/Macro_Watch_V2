@@ -25,5 +25,6 @@ extern void RTC_0_enter_DefaultMode_from_RESET(void);
 extern void CLOCK_0_enter_DefaultMode_from_RESET(void);
 // [Config(Per-Module Mode)Transition Prototypes]$
 
+
 #endif
 

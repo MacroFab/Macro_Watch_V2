@@ -20,24 +20,24 @@ RM := rm -rf
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Macro_Watch_V2.omf
+all: MacroWatch_V2.1.omf
 
 # Tool invocations
-Macro_Watch_V2.omf: echo_path $(OBJS)
+MacroWatch_V2.1.omf: echo_path $(OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Keil 8051 Linker'
-	LX51 "@Macro_Watch_V2.lnp" || $(RC)
+	LX51 "@MacroWatch_V2.1.lnp" || $(RC)
 	@echo 'Finished building target: $@'
 
 # Change from all upper case to the expected case
-	@-mv "MACRO_WATCH_V2.OMF.CRBUILD" "$@"
+	@-mv "MACROWATCH_V2.1.OMF.CRBUILD" "$@"
 
-# Generate hex file: Macro_Watch_V2.hex
-	@Ohx51 "Macro_Watch_V2.omf" "HEXFILE (Macro_Watch_V2.hex)" "H386" 2>&1 >/dev/null
+# Generate hex file: MacroWatch_V2.1.hex
+	@Ohx51 "MacroWatch_V2.1.omf" "HEXFILE (MacroWatch_V2.1.hex)" "H386" 2>&1 >/dev/null
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(EXECUTABLES) Macro_Watch_V2.omf
+	-$(RM) $(EXECUTABLES)$(OBJS) MacroWatch_V2.1.omf
 	-@echo ' '
 
 .PHONY: all clean dependents

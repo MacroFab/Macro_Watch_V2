@@ -78,8 +78,8 @@ int main(void)
 
 	while (1)
 	{
-		PMU0CF = 0x20;
-		RSTSRC = 0x04;                // Disable VDDMON, leave missing clock
+		//PMU0CF = 0x20;
+		//RSTSRC = 0x04;                // Disable VDDMON, leave missing clock
 									  // detector enabled
 		// Put device to sleep
 		PMU0CF = 0x0E | POWER_MODE;   // To change between SUSPEND or SLEEP
@@ -88,11 +88,14 @@ int main(void)
 
 		while (!(VDM0CN & 0x20));     // Wait for VDDOK to be set to 1
 
+		EXTRA = 1;
+
         // Read the wake-up source flags
         wakeup_source = PMU0CF & 0x1F;
 
         // Clear the wake-up source flags
-        PMU0CF = 0x20;
+        //PMU0CF = 0x20;
+        PMU0CF |= PMU0CF_CLEAR__ALL_FLAGS;
 
         // Check for smaRTClock alarm
         if (wakeup_source & 0x04)
@@ -129,7 +132,6 @@ int main(void)
         	H2 = 0;
         	H4 = 0;
         	H8 = 0;
-        	EXTRA = 0;
 
         	// Check for Port Match event
         	if (wakeup_source & 0x02)
@@ -295,6 +297,8 @@ int main(void)
 
 			break;
         }
+
+        EXTRA = 0;
 	}
 }
 
